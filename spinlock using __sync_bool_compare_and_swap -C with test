@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <pthread.h>
+#include <stdlib.h>
+
+#define LOCKED   1
+#define UNLOCKED 0
+
+int lock = UNLOCKED;
+int count = 0;
+int retries = 16;
+
+void acquire_mylock(void) {
+    while (!__sync_bool_compare_and_swap(&lock, UNLOCKED, LOCKED)) {
+        
+    }
+}
+
+void release_mylock(void) {
+    lock = UNLOCKED;
+}
+
+void *addone(void *data) {
+     char *str;
+     str = (char*) data;
+     int i;
+     for (i = 0; i< retries; i++ ) {
+          acquire_mylock();
+          printf("%s: %d\n", str, count++);
+          release_mylock();
+          sleep(1);
+     }
+}
+
+void *minusone(void *data) {
+     char *str;
+     str = (char*) data;
+     int i ;
+     for (i = 0; i< retries; i++ ) {
+          acquire_mylock();
+          printf("%s: %d\n", str, count--);
+          release_mylock();
+          sleep(1);
+     }
+}
+
+int main (int argc, char* argv[]) {
+    pthread_t p1, p2;
+    int t = 1, t2 = 2;
+
+    pthread_create(&p1, NULL, addone, "add one");
+    pthread_create(&p2, NULL, minusone, "minus one"); 
+
+    pthread_join(p1, NULL);
+    pthread_join(p2, NULL);
+
+     return 0;   
+}
