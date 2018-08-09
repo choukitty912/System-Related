@@ -1,0 +1,34 @@
+#include <stdio.h>
+
+int main()
+{
+    int a = (100 + 7.0/3) - 100;
+    float b = 2.0/3.0;
+    float c = 2.0/3.0;
+    printf("%f, %f,%d\n",a,b,c);
+    return 0;
+}
+
+
+/*result is : 0.666667, 0.666667,2*/
+/* why?
+I have not found answer: here is the guess:
+1. printf feteched the variables in one shot,i.e in above function,it will fetch 2 float register + 1 int register
+2. printf does not cast the variables
+3. printf print first float reg for first variable, 2nd float reg for 2nd variable ,3rd int reg for 3rd variable.
+4. b, c, a is printed
+5. if the print identifer is invalid say: %f,%f,%f, then it will print illegal value 
+*/
+
+#include <stdio.h>
+
+int main()
+{
+    int a = (100 + 7.0/3) - 100;
+    int b = 2.0/3.0;
+    float c = 2.0/3.0;
+    printf("%f, %f,%d\n",a,b,c);
+    return 0;
+}
+
+/*0.666667, 0.000000,2*/
