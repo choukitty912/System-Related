@@ -1,0 +1,39 @@
+/*
+ * It is interesting that c do not have a way for bit operation
+ * Yet simple Macro will do the job
+ */
+
+#include <vector>
+#include <iostream>
+
+ 
+#define IntSize sizeof(int)*8
+#define SetBits(A,k)    A[(k/IntSize)] |= (1 << (k%IntSize))
+#define ClearBits(A,k)  A[(k/IntSize)] &= (~(1 << (k%IntSize)))
+#define Bit(A,k)        A[(k/IntSize)] & (1 << (k%IntSize))
+
+int main()
+{
+   std::vector <int> A(10, 0);
+   std::cout<<IntSize<<std::endl;
+   std::cout<< "Set bit at bit 100"<<std::endl;
+   SetBits(A, 100);
+   std::cout<< "Set bit at bit 200"<<std::endl;
+   SetBits(A, 200);
+
+   for ( int i = 0; i < IntSize * 10; i++) {
+       if (Bit(A, i)) {
+           std::cout<<"Bit "<<i << " is Set"<<std::endl;
+       }
+   }
+   
+   std::cout<< "Clear bit at bit 100"<<std::endl;
+   ClearBits(A, 100);
+
+   for ( int i = 0; i < IntSize * 10; i++) {
+       if (Bit(A, i)) {
+           std::cout<<"Bit "<<i << " is Set"<<std::endl;
+       }
+   }
+   return 0;
+}
