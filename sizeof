@@ -1,0 +1,15 @@
+/* To me it is a Hack, underneath it should be calling sizeof in the macro already*/
+
+#include <iostream>
+using namespace std;
+
+#define MYSIZEOF(VALUE) (char*)(&VALUE+1) - (char*)(&VALUE)
+
+int main() 
+{
+    double x = 20;
+    cout<<"Double Size is "<<MYSIZEOF(x)<<endl;
+    cout<< "Double using sizeof "<< sizeof(x)<<endl;
+    return 0;
+    
+}
