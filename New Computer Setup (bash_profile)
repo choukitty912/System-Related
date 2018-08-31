@@ -1,0 +1,11 @@
+ # Basic Setting
+ export CLICOLOR=1
+ export LSCOLORS=ExFxBxDxCxegedabagacad
+ PS1='[\u:\w]\$ '
+ 
+ #alias
+ alias ls='ls -lrta'
+ alias h='history'
+ 
+ #PATH
+ export PATH=/usr/local/bin:~/Code:$PATH
