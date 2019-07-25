@@ -1,7 +1,7 @@
  # Basic Setting
  export CLICOLOR=1
  export LSCOLORS=ExFxBxDxCxegedabagacad
- PS1='[\u:\w]\$ '
+ PS1='[\w:\D{%F %T}]\$ '
  
  #alias
  alias ls='ls -lrta'
