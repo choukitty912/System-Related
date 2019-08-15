@@ -1,0 +1,17 @@
+#include <iostream>
+
+using namespace std;
+#define ENABLE_DEBUG 1
+#define DEBUG_MSG(str,x ) {if(x == 1){do { std::cout << str << endl; } while( false );}}
+int main()
+{
+    
+    DEBUG_MSG("Hello World", ENABLE_DEBUG);
+
+    return 0;
+}
+
+/*
+Hello World         
+*/
+              
