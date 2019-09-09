@@ -1,0 +1,87 @@
+/*
+ *--------------------------
+ * Own itoa Implementation
+ * Sept 8th, 2019
+ *--------------------------
+ */
+
+ #include <iostream>
+ using namespace std;
+
+ void reverse (char *s, int length)
+ {
+     if (!s) return;
+     for (int i = 0; i < length/2; i++) {
+         char tmp;
+         tmp = s[i];
+         s[i] = s[length - 1 - i];
+         s[length - 1 -i] = tmp;
+     }
+
+ }
+ 
+
+ char * itoa(int n, char *buffer, int base) {
+    int flag = 1;
+    int i = 0;
+    if (!buffer) return buffer;
+
+    /* negative flag */
+    if (n < 0) {
+        flag = -1;
+        n = (-1) * n;
+    }
+
+    /* 0 case */
+    if (n == 0) {
+        buffer[i++] = '0';
+        buffer[i] = '\0';
+        return buffer;
+    }
+
+    /* hex case */
+    while (n) {
+        int tmp = n%base;
+        buffer[i++] = (tmp > 9) ? (tmp-10) +'a' : tmp+'0';
+        n = n/base;
+    }
+
+    if (base == 10 & flag == -1){
+        buffer[i++] = '-';
+    }
+
+    buffer[i] = '\0';
+    reverse(buffer, i);
+    return buffer;
+ }
+
+
+ int main(void) {
+     char str[250];
+     itoa(1567, str, 10);
+     cout<<"Input: 1567 base: 10 itoa is "<<str<<endl;
+     memset(str, 0, 250);
+
+    itoa(15678, str, 10);
+     cout<<"Input: 15678 base: 10 itoa is "<<str<<endl;
+     memset(str, 0, 250);
+
+     itoa(-1567, str, 10);
+     cout<<"Input: -1567 base: 10 itoa is "<<str<<endl;
+     memset(str, 0, 250);
+
+     itoa(1567, str, 8);
+     cout<<"Input: 1567 base: 10 itoa is oct "<<str<<endl;
+     memset(str, 0, 250);
+
+    itoa(1567, str, 2);
+     cout<<"Input: 1567 base: 10 itoa is binary "<<str<<endl;
+     memset(str, 0, 250);
+
+    itoa(1567, str, 16);
+     cout<<"Input: 1567 base: 10 itoa is HEX 0x"<<str<<endl;
+     memset(str, 0, 250);
+     return 0;
+
+
+ }
