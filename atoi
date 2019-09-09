@@ -1,0 +1,108 @@
+/*--------------------------------------
+ * ATOI implementation
+ * Sept 7th, 2019
+ * ------------------------------------*/
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int atoi(const char *c)
+{
+    int res = 0;
+    int flag = 1;
+    /* NULL case*/
+    if (!c)  {
+        cout<<"Invalid Input!"<<endl;
+        return res;
+    }
+
+    /* 
+     * 1. white space at the beginning
+     */
+    while (*c == ' ') {
+        c++;
+    }
+
+    /*
+     * 2. if Negative or positive
+     */
+    if (*c == '-'){
+        flag = -1;
+        c++;
+    } else if (*c == '+'){
+        c++;
+    }
+
+    /*
+     * 3. if invalid character, break and return 0
+     * 4. if overflow, return 0
+     */
+
+    while ( *c != '\0' ){
+        if (*c <'0' || *c >'9') {
+            cout<<"invalid character"<<endl;
+            return 0;
+        }
+        if ( flag == 1 && res> INT_MAX/10) {
+            cout<<"overflow (positive)"<<endl;
+            return 0;
+        }
+        if ( flag == 1 && res == INT_MAX/10 && (*c-'0') > INT_MAX%10) {
+            cout<<"overflow (positive)"<<endl;
+            return 0;
+        }
+
+        if (flag == -1 && res > (INT_MIN/10)*(-1)){
+            cout<<"overflow (negative)"<<endl;
+            return 0;
+        }
+        if (flag == -1 && res ==  (INT_MIN/10)*(-1) && (*c-'0') > (INT_MIN%10)*(-1)){
+            cout<<"overflow (negative) -- 2nd"<<endl;
+            return 0;
+        }
+
+        res = res*10 + *c-'0';
+        c++; 
+    
+    }
+    return res*flag;
+
+}
+
+int main(void) 
+{
+    int result;
+    char str[] = {"1234"};
+    result = atoi(str);
+    cout<<"string: "<<str<<"  atoi result: "<<result<<endl;
+    char str1[] = {"     1234"};
+    result = atoi(str1);
+    cout<<"string: "<<str1<<" atoi result: "<<result<<endl;
+    char str2[] = {"     12345656567"};
+    result = atoi(str2);
+    cout<<"string: "<<str2<<" atoi result: "<<result<<endl;
+    char str3[] = {"     -1234"};
+    result = atoi(str3);
+    cout<<"string: "<<str3<<" atoi result: "<<result<<endl;
+    char str4[] = {"     1234xyz"};
+    result = atoi(str4);
+    cout<<"string: "<<str4<<" atoi result: "<<result<<endl;
+    char str5[] = {"-2147483648"};
+    result = atoi(str5);
+    cout<<"string: "<<str5<<" atoi result: "<<result<<endl;
+    char str6[] = {"-2147483649"};
+    result = atoi(str6);
+    cout<<"string: "<<str6<<" atoi result: "<<result<<endl;
+    char str7[] = {"-2147483647"};
+    result = atoi(str7);
+    cout<<"string: "<<str7<<" atoi result: "<<result<<endl;
+    char str8[] = {"2147483647"};
+    result = atoi(str8);
+    cout<<"string: "<<str8<<" atoi result: "<<result<<endl;
+    char str9[] = {"2147483648"};
+    result = atoi(str9);
+    cout<<"string: "<<str9<<" atoi result: "<<result<<endl;
+    return 0;
+}
+
